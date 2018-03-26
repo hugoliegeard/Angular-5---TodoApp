@@ -1,0 +1,54 @@
+<div class="container p-0">
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Mes tâches à faire</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup"></div>
+      <app-add-task (newTaskEvent)="newTask($event)"></app-add-task>
+    </nav>
+  </header>
+
+  <div class="row m-0">
+    <div class="col">
+      <div class="todolist not-done">
+        <h1>A faire</h1>
+        <hr>
+        <ul id="sortable" class="list-unstyled">
+
+          <li class="ui-state-default"
+            *ngFor="let task of tasks | taskFilter : false">
+            <div class="checkbox">
+              <label>
+                <input [checked]="task.status" (click)="taskIsDone(task)" type="checkbox" value="" />{{ task.title }}</label>
+            </div>
+          </li>
+
+        </ul>
+        <div class="todo-footer bg-dark text-white">
+          <strong><span class="count-todos"></span></strong>
+          Nombre de tâches restantes :
+          {{ (tasks | taskFilter : false).length }}
+          <!--{{ getCountDoneTasks() }}-->
+        </div>
+      </div>
+    </div>
+    <div class="col todo-right">
+      <div class="todolist">
+        <h1>Terminées</h1>
+        <ul id="done-items" class="list-unstyled">
+
+          <li *ngFor="let task of tasks | taskFilter : true">
+            {{ task.title }}
+            <button (click)="removeTask(task)" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
